@@ -1,0 +1,19 @@
+extends layout.pug 
+
+block head
+    link(rel="stylesheet", herf="/language.css")
+
+block content
+    h2 Cities 
+    table
+        thead
+            th.text-center Code
+            th Language 
+            th.number Percentage 
+        tbody 
+            each row in rows 
+                tr 
+                    td.fit  #{row.CountryCode}
+                    td  #{row.Language}
+                    - const population = new Intl.NumberFormat().format(row.Percentage)
+                    td.fit.number #{percentage}

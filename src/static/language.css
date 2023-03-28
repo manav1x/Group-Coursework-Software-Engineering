@@ -1,0 +1,39 @@
+/* Style for table */
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  /* Style for table head */
+  thead {
+    background-color: #ddd;
+  }
+  
+  /* Style for table head cells */
+  th {
+    padding: 1rem;
+    text-align: left;
+  }
+  
+  /* Style for table body cells */
+  td {
+    border: 1px solid #ccc;
+    padding: 1rem;
+  }
+  
+  /* Style for table body rows */
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  /* Style for table cell with class "fit" */
+  td.fit {
+    white-space: nowrap;
+    width: 1%;
+  }
+  
+  /* Style for table cell with class "number" */
+  td.number {
+    text-align: right;
+  }
+  
