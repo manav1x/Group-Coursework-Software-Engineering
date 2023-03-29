@@ -1,5 +1,6 @@
-const express = require("express");
-const mysql = require("mysql2/promise"); // Change import to promise version
+import express from "express";
+import mysql from "mysql2/promise";
+
 
 const app = express();
 const port = 4000;
@@ -14,7 +15,7 @@ app.get('/', (req, res) => {
     res.render("index");
 });
 
-const db = mysql.createConnection({ // Change createConnection to createPool
+const db = await mysql.createConnection({ 
     host: process.env.DATABASE_HOST || "localhost",
     user: "user",
     password: "password",
@@ -25,36 +26,37 @@ app.get("/ping", (req, res) => {
     res.send("pong");
 });
 
-app.get("/cities", async (req, res) => { // Add async keyword to route handler
-    try {
-        const [rows, fields] = await db.execute("SELECT * FROM `city`"); // Use await and destructuring assignment
+app.get("/cities", async (req, res) => { 
+    try{
+        const [rows, fields] = await db.execute("SELECT * FROM `city`");
         console.log(`/cities: ${rows.length} rows`);
         return res.render("cities", {rows, fields});
     } catch (err) {
         console.error(err);
-        return res.status(500).send("Internal Server Error"); // Return error response
+        return res.send("Internal Server Error"); 
     }
+
 });
 
-app.get("/country", async (req, res) => { // Add async keyword to route handler
+app.get("/country", async (req, res) => { 
     try {
-        const [rows, fields] = await db.execute("SELECT * FROM `country`"); // Use await and destructuring assignment
+        const [rows, fields] = await db.execute("SELECT * FROM `country`"); 
         console.log(`/country: ${rows.length} rows`);
         return res.render("country", {rows, fields});
     } catch (err) {
         console.error(err);
-        return res.status(500).send("Internal Server Error"); // Return error response
+        return res.send("Internal Server Error"); 
     }
 });
 
-app.get("/language", async (req, res) => { // Add async keyword to route handler
+app.get("/language", async (req, res) => { 
     try {
-        const [rows, fields] = await db.execute("SELECT * FROM `countrylanguage`"); // Use await and destructuring assignment
+        const [rows, fields] = await db.execute("SELECT * FROM `countrylanguage`"); 
         console.log(`/language: ${rows.length} rows`);
         return res.render("language", {rows, fields});
     } catch (err) {
         console.error(err);
-        return res.status(500).send("Internal Server Error"); // Return error response
+        return res.send("Internal Server Error"); 
     }
 });
 

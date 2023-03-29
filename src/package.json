@@ -4,7 +4,7 @@
   "description": "",
   "main": "backend.js",
   "scripts": {
-    "start": "node backend.,mjs",
+    "start": "node backend.mjs",
     "dev": "nodemon -e js,pug,mjs,css --exec backend.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
