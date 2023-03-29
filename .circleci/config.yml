@@ -8,7 +8,7 @@ jobs:
       - image : cimg/node:lts
     steps:
       - checkout:
-          path: ~/GROUP-COURSEWORK-SOFTWARE-ENGINEERING
+          path: ~/GROUP-COURSEWORK-SOFTWARE-ENGINEERING 
       - run: npm install
 
 
