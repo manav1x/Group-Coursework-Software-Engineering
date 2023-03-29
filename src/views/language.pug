@@ -4,16 +4,15 @@ block head
     link(rel="stylesheet", herf="/language.css")
 
 block content
-    h2 Cities 
+    h2 Languages 
     table
         thead
             th.text-center Code
-            th Language 
-            th.number Percentage 
+            th.text-center Language 
+            th Percentage 
         tbody 
             each row in rows 
                 tr 
                     td.fit  #{row.CountryCode}
-                    td  #{row.Language}
-                    - const population = new Intl.NumberFormat().format(row.Percentage)
-                    td.fit.number #{row.percentage}
+                    td.fit  #{row.Language}
+                    td.fit  #{row.Percentage}

@@ -8,12 +8,12 @@ block content
     table
         thead
             th.text-center Code
-            th City 
+            th.text-center City 
             th.number Population 
         tbody 
             each row in rows 
                 tr 
                     td.fit  #{row.CountryCode}
-                    td  #{row.Name}
+                    td.fit  #{row.Name}
                     - const population = new Intl.NumberFormat().format(row.Population)
                     td.fit.number #{population}

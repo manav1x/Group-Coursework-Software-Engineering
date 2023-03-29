@@ -12,7 +12,7 @@ table {
   /* Style for table head cells */
   th {
     padding: 1rem;
-    text-align: left;
+    text-align: center;
   }
   
   /* Style for table body cells */
@@ -34,6 +34,6 @@ table {
   
   /* Style for table cell with class "number" */
   td.number {
-    text-align: right;
+    text-align: center;
   }
   
