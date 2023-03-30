@@ -1,15 +1,15 @@
-extends layout.pug 
+extends layout.pug
 
 block head
     link(rel="stylesheet", herf="/country.css")
 
-block content
-    h2 Countries  
+block content 
+    h2 Countries
     table
         thead
             th.text-center Code
-            th.text-center Name   
-            th.text-center Continent  
+            th.text-center Name
+            th.text-center Continent
         tbody 
             each row in rows 
                 tr 
