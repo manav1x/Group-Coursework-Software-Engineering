@@ -17,8 +17,17 @@ console.log(process.env.NODE_ENV);
 
 
 //Handle request to the root URL
-app.get('/', (req, res) => {
+app.get("/", (res,req) =>{
     res.render("index");
+});
+
+app.get('/register', function(res,req){
+    res.render('register');
+
+});
+
+app.get('/login', function(res,req){
+    res.render('login');
 });
 
 //create a MYSQL database coonnection
@@ -30,9 +39,6 @@ const db = await mysql.createConnection({
 });
 
 
-app.get("/ping", (req, res) => {
-    res.send("pong");
-});
 
 //Handle request to the cities URL
 app.get("/cities", async (req, res) => { 
