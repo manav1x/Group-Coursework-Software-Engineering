@@ -6,6 +6,8 @@ import mysql from "mysql2/promise";
 const app = express();
 const port = 4000;
 
+app.use(express.urlencoded({extended: true}));
+
 //Set the view engine to pug
 app.set("view engine", "pug");
 
@@ -41,7 +43,7 @@ const db = await mysql.createConnection({
 
 
 //Handle request to the cities URL
-app.get("/cities", async (req, res) => { 
+app.get("/cities/:id", async (req, res) => { 
     try{
         const [rows, fields] = await db.execute("SELECT * FROM `city`");
         console.log(`/cities: ${rows.length} rows`);
@@ -54,7 +56,7 @@ app.get("/cities", async (req, res) => {
 });
 
 //Handle request to the country URL
-app.get("/country", async (req, res) => { 
+app.get("/country/:id", async (req, res) => { 
     try {
         const [rows, fields] = await db.execute("SELECT * FROM `country`"); 
         console.log(`/country: ${rows.length} rows`);
@@ -67,7 +69,7 @@ app.get("/country", async (req, res) => {
 
 
 //Handle request to the language URL
-app.get("/language", async (req, res) => { 
+app.get("/language/:id", async (req, res) => { 
     try {
         const [rows, fields] = await db.execute("SELECT * FROM `countrylanguage`"); 
         console.log(`/language: ${rows.length} rows`);
@@ -76,6 +78,18 @@ app.get("/language", async (req, res) => {
         console.error(err);
         return res.send("Internal Server Error"); 
     }
+});
+
+app.post('/cities/:id', async (req, res) => {
+    const cityId  = req.params.id;
+    const { name } = req.body;
+    const sql = `
+        UPDATE city
+        SET Name = '${name}'
+        WHERE ID = '${cityId}';
+    `
+    await Connection.execute(sql);
+    return res.redirect(`/cities/${cityId}`)
 });
 
 //Start the Express application and listen for incoming requests

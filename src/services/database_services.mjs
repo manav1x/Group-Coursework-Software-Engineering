@@ -30,6 +30,29 @@ export default class DatabaseService {
     }
     async getCity(cityId){
         const sql = `
-        SELECT city.*, country.Name AS Country, country.Region, country.Continent, country`
+        SELECT city.*, country.Name AS Country, country.Region, country.Continent, country.population as Country
+        FROM CITY
+        INNER JOIN country ON country.code = city.CountryCode
+        WEHRE JOIN country ON country.Code = city.CountryCode
+        WHERE city.ID = ${cityId}
+        `;
+        const [rows,fields] = await this.conn.execute(sql);
+        const data = rows[0];
+        console.log(data);
+        const city = new City(
+            data.ID,
+            data.CountryCode,
+            data.District,
+            data,Population
+        );
+        const country = new Country(
+            data.Code,
+            data.Country,
+            data.Continent,
+            data.Region,
+            data.CountryPopulation
+        );
+        city.country = country;
+        return city;
     }
 }
