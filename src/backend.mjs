@@ -2,13 +2,13 @@
 import express from "express";
 import mysql from "mysql2/promise";
 
-//Create an instance for express and set port to 4000
+//Create an instance for expess and set port to 4000
 const app = express();
 const port = 4000;
 
 //app.use(express.urlencoded({extended: true}));
 
-//Set the view engine to pug
+//Set the vie engine to pug
 app.set("view engine", "pug");
 
 //Use the static files form static dictionary
@@ -28,7 +28,7 @@ app.get("/", (req,res) =>{
 
 });
 
-app.get('/login', function(res,req){
+app.get('/login', funtion(res,req){
     res.render('login');
 });*/
 
