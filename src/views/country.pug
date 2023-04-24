@@ -3,16 +3,16 @@ extends layout.pug
 block head
     link(rel="stylesheet", href="/country.css")
 
-block content 
-    h2 Countries
+block content
+    h2 Cities 
     table
         thead
             th.text-center Code
-            th.text-center Name
-            th.text-center Continent
+            th Name   
+            th Continent  
         tbody 
             each row in rows 
                 tr 
                     td.fit  #{row.Code}
-                    td.fit  #{row.Name}
-                    td.fit  #{row.Continent}
+                    td  #{row.Name}
+                    td #{row.Continent}

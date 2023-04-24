@@ -12,7 +12,7 @@ table {
   /* Style for table head cells */
   th {
     padding: 1rem;
-    text-align: center;
+    text-align: left;
   }
   
   /* Style for table body cells */
