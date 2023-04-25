@@ -5,6 +5,9 @@ import mysql from "mysql2/promise";
 const app = express();
 const port = 4000;
 
+//app.use(express.urlencoded({extended: true}));
+
+//Set the view engine to pug
 app.set("view engine", "pug");
 
 app.use(express.static("static"));
@@ -15,6 +18,16 @@ app.get('/', (req, res) => {
     res.render("index");
 });
 
+/*app.get('/register', function(res,req){
+    res.render('register');
+
+});
+
+app.get('/login', function(res,req){
+    res.render('login');
+});*/
+
+//create a MYSQL database coonnection
 const db = await mysql.createConnection({ 
     host: process.env.DATABASE_HOST || "localhost",
     user: "user",
