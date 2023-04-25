@@ -103,6 +103,7 @@ app.post("/makeaccount", async (req, res) => {
     }
   });
 
+  
 app.post("/authenticate", async (req, res) => {
     const { email, password } = req.body;
   
