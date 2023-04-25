@@ -29,8 +29,19 @@ USE `world`;
 --
 -- Table structure for table `city`
 --
-
-DROP TABLE IF EXISTS `city`;
+CREATE TABLE `user` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX email_index (`email`)
+);
+--
+-- Dumping data for table `user`
+--
+INSERT INTO `user` VALUES (1,'mdoshi452@gmail.com','MDfromtheends');
+INSERT INTO `user` VALUES (2,'doshim@roehampton.ac.uk','password');
+commit;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `city` (

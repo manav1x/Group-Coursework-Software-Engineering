@@ -5,18 +5,20 @@
   "main": "backend.js",
   "scripts": {
     "start": "node backend.mjs",
-    "dev": "nodemon -e js,pug,mjs,css --exec backend.mjs",
+    "dev": "nodemon -e pug,js,mjs,css --exec node backend.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express": "^4.18.2",
-    "mysql2": "^3.2.0",
-    "node": "^19.8.1",
-    "pug": "^3.0.2"
+    "express-session": "^1.17.3",
+    "mysql2": "^3.1.2",
+    "pug": "^3.0.2",
+    "node": "^19.8.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.20"
   }
 }

@@ -1,4 +1,4 @@
-import mysql from "mysql12/promise";
+import mysql from "mysql2/promise";
 import City from "../models/city.mjs";
 import Country from "../models/country.mjs";
 
@@ -10,10 +10,10 @@ export default class DatabaseService {
 
     static async connect(){
         const conn = await mysql.createConnection({
-            host: process.env.DATABASE_HOST || "localhost", 
-            user: "user",
-            password: "password",
-            database: "world",
+          host: process.env.DATABASE_HOST || "localhost", 
+          user: "user",
+          password: "password",
+          database: "world",
         });
 
         return new DatabaseService(conn);
@@ -43,7 +43,7 @@ export default class DatabaseService {
             data.ID,
             data.CountryCode,
             data.District,
-            data,Population
+            data.Population
         );
         const country = new Country(
             data.Code,

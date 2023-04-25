@@ -1,12 +1,31 @@
 import express from "express";
 import mysql from "mysql2/promise";
+import bcrypt from "bcryptjs";
+import DatabaseService from "./services/database_services.mjs";
+import session from "express-session";
 
 
 const app = express();
 const port = 4000;
+app.use(express.urlencoded({ extended: true }));
+
+app.use(
+  session({
+    secret: "verysecretkey",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false },
+  })
+);
 
 //app.use(express.urlencoded({extended: true}));
-
+//create a MYSQL database coonnection
+const db = await mysql.createConnection({ 
+    host: process.env.DATABASE_HOST || "localhost",
+    user: "user",
+    password: "password",
+    database: "world",
+});
 //Set the view engine to pug
 app.set("view engine", "pug");
 
@@ -15,28 +34,22 @@ app.use(express.static("static"));
 console.log(process.env.NODE_ENV);
 
 app.get('/', (req, res) => {
-    res.render("index");
+    res.render("landing-page");
 });
 
-/*app.get('/register', function(res,req){
+app.get('/register', function(req,res){
     res.render('register');
-
+});
+app.get('/subscription-plans', function(req,res){
+    res.render('subscription-plans');
 });
 
-app.get('/login', function(res,req){
+app.get('/login', function(req,res){
     res.render('login');
-});*/
-
-//create a MYSQL database coonnection
-const db = await mysql.createConnection({ 
-    host: process.env.DATABASE_HOST || "localhost",
-    user: "user",
-    password: "password",
-    database: "world",
 });
 
-app.get("/ping", (req, res) => {
-    res.send("pong");
+app.get('/layout', function(req,res){
+    res.render('layout');
 });
 
 app.get("/cities", async (req, res) => { 
@@ -74,19 +87,66 @@ app.get("/language", async (req, res) => {
 });
 
 
-/*app.post('/cities/:id', async (req, res) => {
-    const cityId  = req.params.id;
-    const { name } = req.body;
-    const sql = `
-        UPDATE city
-        SET Name = '${name}'
-        WHERE ID = '${cityId}';
-    `
-    await Connection.execute(sql);
-    return res.redirect(`/cities/${cityId}`)
-});*/
+app.post("/makeaccount", async (req, res) => {
+    const { email, password } = req.body;
+    const hashed = await bcrypt.hash(password, 10);
+    try {
+      const sql = `INSERT INTO user (email, password) VALUES ('${email}', '${hashed}')`;
+      const [result, _] = await conn.execute(sql);
+      const id = result.insertId;
+      req.session.auth = true;
+      req.session.userId = id;
+      return res.redirect("/login");
+    } catch (err) {
+      console.error(err);
+      return res.status(400).send(err.sqlMessage);
+    }
+  });
+
+app.post("/authenticate", async (req, res) => {
+    const { email, password } = req.body;
+  
+    if (!email || !password) {
+      return res.status(401).send("Missing credentials");
+    }
+  
+    const sql = `SELECT id, password FROM user WHERE email = '${email}'`;
+    const [results, cols] = await conn.execute(sql);
+  
+    const user = results[0];
+  
+    if (!user) {
+      return res.status(401).send("User does not exist");
+    }
+  
+    const { id } = user;
+    const hash = user?.password;
+    const match = await bcrypt.compare(password, hash);
+  
+    if (!match) {
+      return res.status(401).send("Invalid password");
+    }
+  
+    req.session.auth = true;
+    req.session.userId = id;
+  
+    return res.redirect("/layout");
+  });
 
 
+app.get("/account", async (req, res) => {
+  const { auth, userId } = req.session;
+
+  if (!auth) {
+    return res.redirect("/login");
+  }
+
+  const sql = `SELECT id, email FROM user WHERE user.id = ${userId}`;
+  const [results, cols] = await conn.execute(sql);
+  const user = results[0];
+
+  res.render("account", { user });
+});
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
