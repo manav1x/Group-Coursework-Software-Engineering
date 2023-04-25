@@ -92,7 +92,7 @@ app.post("/makeaccount", async (req, res) => {
     const hashed = await bcrypt.hash(password, 10);
     try {
       const sql = `INSERT INTO user (email, password) VALUES ('${email}', '${hashed}')`;
-      const [result, _] = await conn.execute(sql);
+      const [result, _] = await db.execute(sql);
       const id = result.insertId;
       req.session.auth = true;
       req.session.userId = id;
@@ -103,7 +103,7 @@ app.post("/makeaccount", async (req, res) => {
     }
   });
 
-  
+
 app.post("/authenticate", async (req, res) => {
     const { email, password } = req.body;
   
@@ -112,7 +112,7 @@ app.post("/authenticate", async (req, res) => {
     }
   
     const sql = `SELECT id, password FROM user WHERE email = '${email}'`;
-    const [results, cols] = await conn.execute(sql);
+    const [results, cols] = await db.execute(sql);
   
     const user = results[0];
   
@@ -143,7 +143,7 @@ app.get("/account", async (req, res) => {
   }
 
   const sql = `SELECT id, email FROM user WHERE user.id = ${userId}`;
-  const [results, cols] = await conn.execute(sql);
+  const [results, cols] = await db.execute(sql);
   const user = results[0];
 
   res.render("account", { user });
