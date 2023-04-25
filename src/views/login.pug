@@ -1,3 +1,6 @@
+block head
+    link(rel="stylesheet", href="/login.css")
+
 block content
     h1 Login here
     form(action='/authenticate' method='POST')
@@ -6,3 +9,7 @@ block content
         label(for='email') Enter your password:
         input('name'='password')
         input(type='submit' value='Submit')
+
+
+
+        

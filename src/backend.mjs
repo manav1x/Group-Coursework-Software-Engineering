@@ -53,37 +53,66 @@ app.get('/layout', function(req,res){
 });
 
 app.get("/cities", async (req, res) => { 
-    try{
-        const [rows, fields] = await db.execute("SELECT * FROM `city`");
-        //console.log(`/cities: ${rows.length} rows`);
-        return res.render("cities", {rows, fields});
-    } catch (err) {
-        console.error(err);
-        return res.send("Internal Server Error"); 
-    }
-
+  try {
+      const search = req.query.q || "";
+      let populated = req.query.max;
+      let sortOrder = "ID ASC";
+      const sortParam = req.query.sort;
+      if (sortParam === "population_asc") {
+        sortOrder = "Population ASC";
+      } else if (sortParam === "population_desc") {
+        sortOrder = "Population DESC";
+      } 
+      const [rows, fields] = await db.execute(`SELECT * FROM city WHERE name LIKE '%${search}%' ORDER BY ${sortOrder}`);
+      //console.log(`/cities: ${rows.length} rows`);
+      return res.render("cities", {rows, fields, search});
+  } catch (err) {
+      console.error(err);
+      return res.send("Internal Server Error");
+  }
 });
+
+
+
 
 app.get("/country", async (req, res) => { 
-    try {
-        const [rows, fields] = await db.execute("SELECT * FROM `country`"); 
-        //console.log(`/country: ${rows.length} rows`);
-        return res.render("country", {rows, fields});
-    } catch (err) {
-        console.error(err);
-        return res.send("Internal Server Error"); 
-            }
+  try {
+      const search = req.query.q || "";
+      let sortOrder = "Code ASC";
+      const sortParam = req.query.sort;
+      if (sortParam === "population_asc") {
+        sortOrder = "Population ASC";
+      } else if (sortParam === "population_desc") {
+        sortOrder = "Population DESC";
+      } 
+      const [rows, fields] = await db.execute(`SELECT * FROM country WHERE name LIKE '%${search}%' ORDER BY ${sortOrder}`);
+      //console.log(`/country: ${rows.length} rows`);
+      return res.render("country", {rows, fields, search});
+  } catch (err) {
+      console.error(err);
+      return res.send("Internal Server Error"); 
+  }
 });
 
+
+
 app.get("/language", async (req, res) => { 
-    try {
-        const [rows, fields] = await db.execute("SELECT * FROM `countrylanguage`"); 
-        //console.log(`/language: ${rows.length} rows`);
-        return res.render("language", {rows, fields});
-    } catch (err) {
-        console.error(err);
-        return res.send("Internal Server Error"); 
-    }
+  try {
+    const search = req.query.q || "";
+    let sortOrder = "CountryCode ASC";
+    const sortParam = req.query.sort;
+    if (sortParam === "percentage_asc") {
+      sortOrder = "Percentage ASC";
+    } else if (sortParam === "percentage_desc") {
+      sortOrder = "Percentage DESC";
+    } 
+    const [rows, fields] = await db.execute(`SELECT * FROM countrylanguage WHERE language LIKE '%${search}%' ORDER BY ${sortOrder}`);
+    //console.log(`/language: ${rows.length} rows`);
+    return res.render("language", {rows, fields, search});
+  } catch (err) {
+    console.error(err);
+    return res.send("Internal Server Error"); 
+  }
 });
 
 
@@ -92,7 +121,7 @@ app.post("/makeaccount", async (req, res) => {
     const hashed = await bcrypt.hash(password, 10);
     try {
       const sql = `INSERT INTO user (email, password) VALUES ('${email}', '${hashed}')`;
-      const [result, _] = await db.execute(sql);
+      const [result, _] = await conn.execute(sql);
       const id = result.insertId;
       req.session.auth = true;
       req.session.userId = id;
