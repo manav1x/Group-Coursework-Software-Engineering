@@ -41,6 +41,7 @@ CREATE TABLE `user` (
 --
 INSERT INTO `user` VALUES (1,'mdoshi452@gmail.com','MDfromtheends');
 INSERT INTO `user` VALUES (2,'doshim@roehampton.ac.uk','password');
+
 commit;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;

@@ -1,34 +1,69 @@
-/* Style for table */
+body {
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
+
 table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  /* Style for table head */
-  thead {
-    background-color: #ddd;
-  }
-  
-  /* Style for table head cells */
-  th {
-    padding: 1rem;
-    text-align: left;
-  }
-  
-  /* Style for table body cells */
-  td {
-    border: 1px solid #ccc;
-    padding: 1rem;
-  }
-  
-  /* Style for table body rows */
-  tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  /* Style for table cell with class "fit" */
-  td.fit {
-    white-space: nowrap;
-    width: 1%;
-  }
-  
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+th.text-center, td.text-center {
+  text-align: center;
+}
+
+th.fit, td.fit {
+  width: 10%;
+}
+
+th.number, td.number {
+  text-align: right;
+}
+
+form {
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+input[type="text"] {
+  width: 50%;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ddd;
+  margin-right: 0.5rem;
+}
+
+button[type="submit"] {
+  padding: 0.5rem 1.5rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+
+label {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}

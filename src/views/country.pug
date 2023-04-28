@@ -4,15 +4,28 @@ block head
     link(rel="stylesheet", href="/country.css")
 
 block content
-    h2 Cities 
+    h2 Countries
+    form(method="get" action="/country")
+        input(type="text" name="q" placeholder="Search countries..." value=searchTerm)
+        button(type="submit") Search
+    label(style="text-align: center;") Sort By Population
+    form(method="get" action="/country")
+        input(type="hidden" name="q" value= search)
+        button(type="submit" name="sort" value="population_asc") Ascending sort
+    form(method="get" action="/country")
+        input(type="hidden" name="q" value= search)
+        button(type="submit" name="sort" value="population_desc") Descending sort
     table
         thead
             th.text-center Code
-            th Name   
-            th Continent  
-        tbody 
-            each row in rows 
-                tr 
-                    td.fit  #{row.Code}
-                    td  #{row.Name}
+            th Name
+            th Continent    
+            th Population
+        tbody
+            each row in rows
+                tr
+                    td.fit #{row.Code}
+                    td #{row.Name}
                     td #{row.Continent}
+                    -const population = new Intl.NumberFormat().format(row.Population);
+                    td.fit.number #{population}

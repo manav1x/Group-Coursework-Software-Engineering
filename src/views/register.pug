@@ -1,8 +1,11 @@
+block head
+    link(rel="stylesheet", href="/register.css")
+
 block content
     h1 Register here
     form(action='/makeaccount' method='POST')
         label(for='email') Enter your email:
         input('name'='email', type='email', required)
-        label(for='email') Enter your password:
-        input('name'='password', type='password', required)
+        label(for='password') Enter your password:
+        input('name'='password', type='password', pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}", title="Password must contain at least one number, one lowercase letter, one uppercase letter, and be at least 8 characters long", required)
         input(type='submit' value='Submit')

@@ -4,7 +4,17 @@ block head
     link(rel="stylesheet", href="/language.css")
 
 block content
-    h2 Cities 
+    h2 Languages  
+    form(method ="get", action="/language")
+        input(type="text", name="q", placeholder="Search language...", value=search)
+        button(type="submit") Search
+    label(style="text-align: center;") Sort By Percentage
+    form(method="get" action="/language")
+        input(type="hidden" name="q" value= search)
+        button(type="submit" name="sort" value="percentage_asc") Ascending sort
+    form(method="get" action="/language")
+        input(type="hidden" name="q" value= search)
+        button(type="submit" name="sort" value="percentage_desc") Descending sort
     table
         thead
             th.text-center Code
