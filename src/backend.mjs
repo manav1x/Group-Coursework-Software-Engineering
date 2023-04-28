@@ -114,6 +114,8 @@ app.get("/country", async (req, res) => {
 });
 // Handling GET requests to the '/language' URL by querying the 'language' table in the database and rendering the 'country' template with the retrieved data
 
+
+
 app.get("/language", async (req, res) => { 
   try {
     const search = req.query.q || "";
