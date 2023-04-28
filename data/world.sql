@@ -31,14 +31,8 @@ USE `world`;
 --
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `firstname` varchar(255) NOT NULL,
-  `lastname` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `contact` varchar(255) NOT NULL,
-  `gender` varchar(255) NOT NULL,
-  `age` int NOT NULL DEFAULT '0',
-  `type_of_subscription` varchar NOT NULL DEFAULT '0'
   PRIMARY KEY (`id`),
   UNIQUE INDEX email_index (`email`)
 );
